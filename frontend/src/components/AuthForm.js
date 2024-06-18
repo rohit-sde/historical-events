@@ -1,9 +1,9 @@
 import {
     Form,
     Link,
+    useSearchParams,
     useActionData,
     useNavigation,
-    useSearchParams,
 } from "react-router-dom";
 
 import classes from "./AuthForm.module.css";
@@ -30,13 +30,7 @@ function AuthForm() {
                 {data && data.message && <p>{data.message}</p>}
                 <p>
                     <label htmlFor="email">Email</label>
-                    <input
-                        id="email"
-                        type="email"
-                        name="email"
-                        // defaultValue={"njdsbcc@sdc"}
-                        required
-                    />
+                    <input id="email" type="email" name="email" required />
                 </p>
                 <p>
                     <label htmlFor="image">Password</label>
@@ -44,7 +38,6 @@ function AuthForm() {
                         id="password"
                         type="password"
                         name="password"
-                        // defaultValue={"123456"}
                         required
                     />
                 </p>
@@ -53,7 +46,7 @@ function AuthForm() {
                         {isLogin ? "Create new user" : "Login"}
                     </Link>
                     <button disabled={isSubmitting}>
-                        {isSubmitting ? "Submitting" : "Save"}
+                        {isSubmitting ? "Submitting..." : "Save"}
                     </button>
                 </div>
             </Form>
