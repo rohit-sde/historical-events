@@ -1,5 +1,5 @@
-import { useFetcher } from "react-router-dom";
 import { useEffect } from "react";
+import { useFetcher } from "react-router-dom";
 
 import classes from "./NewsletterSignup.module.css";
 
@@ -7,13 +7,12 @@ function NewsletterSignup() {
     const fetcher = useFetcher();
     const { data, state } = fetcher;
 
-    console.log({ data, state });
-
     useEffect(() => {
         if (state === "idle" && data && data.message) {
             window.alert(data.message);
         }
     }, [data, state]);
+
     return (
         <fetcher.Form
             method="post"

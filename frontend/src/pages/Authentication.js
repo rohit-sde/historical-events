@@ -1,4 +1,5 @@
 import { json, redirect } from "react-router-dom";
+
 import AuthForm from "../components/AuthForm";
 
 function AuthenticationPage() {
@@ -10,8 +11,9 @@ export default AuthenticationPage;
 export async function action({ request }) {
     const searchParams = new URL(request.url).searchParams;
     const mode = searchParams.get("mode") || "login";
+
     if (mode !== "login" && mode !== "signup") {
-        throw json({ message: "Unsupported mode" }, { status: 422 });
+        throw json({ message: "Unsupported mode." }, { status: 422 });
     }
 
     const data = await request.formData();
@@ -19,10 +21,6 @@ export async function action({ request }) {
         email: data.get("email"),
         password: data.get("password"),
     };
-    console.log(data);
-    console.log(authData);
-
-    console.log(mode);
 
     const response = await fetch("http://localhost:8080/" + mode, {
         method: "POST",
