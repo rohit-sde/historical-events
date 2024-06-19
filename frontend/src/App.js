@@ -1,6 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import EditEventPage from "./pages/EditEvent";
+import ErrorPage from "./pages/Error";
 import EventDetailPage, {
     loader as eventDetailLoader,
     action as deleteEventAction,
@@ -10,21 +11,21 @@ import EventsRootLayout from "./pages/EventsRoot";
 import HomePage from "./pages/HomePage";
 import NewEventPage from "./pages/NewEvents";
 import RootLayout from "./pages/Root";
-import ErrorPage from "./pages/Error";
-import {
-    action,
-    action as manipulateEventAction,
-} from "./components/EventForm";
+import { action as manipulateEventAction } from "./components/EventForm";
 import NewsletterPage, { action as newsletterAction } from "./pages/Newsletter";
 import AuthenticationPage, {
     action as authAction,
 } from "./pages/Authentication";
+import { action as logoutAction } from "./pages/Logout";
+import { checkAuthLoader, tokenLoader } from "./util/auth";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <RootLayout />,
         errorElement: <ErrorPage />,
+        id: "root",
+        loader: tokenLoader,
         children: [
             { index: true, element: <HomePage /> },
             {
@@ -50,6 +51,7 @@ const router = createBrowserRouter([
                                 path: "edit",
                                 element: <EditEventPage />,
                                 action: manipulateEventAction,
+                                loader: checkAuthLoader,
                             },
                         ],
                     },
@@ -57,6 +59,7 @@ const router = createBrowserRouter([
                         path: "new",
                         element: <NewEventPage />,
                         action: manipulateEventAction,
+                        loader: checkAuthLoader,
                     },
                 ],
             },
@@ -69,6 +72,10 @@ const router = createBrowserRouter([
                 path: "newsletter",
                 element: <NewsletterPage />,
                 action: newsletterAction,
+            },
+            {
+                path: "logout",
+                action: logoutAction,
             },
         ],
     },
